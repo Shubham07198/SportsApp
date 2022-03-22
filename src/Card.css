@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans");
+
+.card {
+  /* box-shadow: 0 0 10px 5px lightgray; */
+  border: 1px;
+  min-width: 24rem;
+  display: flex;
+  transition: all 0.4s;
+  background-color: goldenrod;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+.card__img {
+  width: 50%;
+  height: inherit;
+  object-fit: cover;
+  flex: 0.4;
+}
+
+.card__body {
+  margin: 1rem;
+  text-align: center;
+  font-family: "Josefin Sans", cursive;
+}
+
+.card__title {
+  line-height: 1.4rem;
+}
+.card__desc {
+  line-height: 1.2rem;
+  background-color: #444;
+  color: white;
+  text-align: center;
+  font-weight: 500;
+  text-decoration-color: aqua;
+  border-radius: 8px;
+  padding: 4px 0px;
+}
+.card__price {
+  font-weight: 600;
+  font-size: 18px;
+}
+.upcoming_match {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+@media screen and (min-width: 600px) {
+  .card {
+    flex-direction: column;
+    text-align: center;
+    min-width: 14rem;
+  }
+  .card__img {
+    width: 100%;
+    height: 12rem;
+    object-fit: cover;
+  }
+}
