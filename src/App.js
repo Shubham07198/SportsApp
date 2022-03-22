@@ -2,70 +2,61 @@ import './App.css';
 
 import React, { useEffect } from 'react'
 
-import Card from './Card';
-import {isEmpty} from "lodash"
+import Card from './components/Card';
+import { isEmpty } from "lodash"
 
 function App() {
-//  const [teamList,setTeamList]=React.useState([])
- const [playerList,setPlayerList]=React.useState([])
- const [toggleSearch,setToggleSearch]=React.useState(false)
- const [filtered,setFiltered]=React.useState([])
- const [search,setSearch]=React.useState("")
-  useEffect(()=>{
-  fetch("https://api.npoint.io/20c1afef1661881ddc9c").then(res=>{
-    return res.json()
-  }).then((data)=>{
-    // if(!isEmpty(data?.teamsList)){
-    //   setTeamList(data?.teamsList)
-      
-    // }
-    
-    if(!isEmpty(data?.playerList))
-    {
-      let sortedList = data.playerList?.sort((playerA,playerB)=> {return playerB - playerA})
-      setPlayerList(sortedList)
-    }
-     
-    
-  })
-  },[])
+  const [playerList, setPlayerList] = React.useState([])
+  const [filtered, setFiltered] = React.useState([])
+  const [search, setSearch] = React.useState("")
+  useEffect(() => {
+    fetch("https://api.npoint.io/20c1afef1661881ddc9c").then(res => {
+      return res.json()
+    }).then((data) => {
 
-  useEffect(()=>{
-   if(search)
-   {
-     console.log("ss",search)
-     const res= playerList?.filter(player=>player?.PFName?.toLowerCase()?.includes(search) || player?.TName?.toLowerCase()?.includes(search))
-   console.log("res",res)
-   setFiltered(res)
+
+      if (!isEmpty(data?.playerList)) {
+        let sortedList = data.playerList?.sort((playerA, playerB) => { return playerB - playerA })
+        setPlayerList(sortedList)
+      }
+
+
+    })
+  }, [])
+
+  useEffect(() => {
+    if (search) {
+      const res = playerList?.filter(player => player?.PFName?.toLowerCase()?.includes(search) || player?.TName?.toLowerCase()?.includes(search))
+      setFiltered(res)
     }
-  },[search])
+  }, [search])
 
   return (
     <>
       <div className={`search__container`}>
-        
-        <input placeholder='Search for player or team...' type="text" value={search} onChange={(e)=>setSearch(e?.target?.value)}/>
-        <div className="icon" onClick={()=>setToggleSearch(prevState=>!prevState)}>
-          <i className='search fa fa-search'></i>
-         
-        </div>
-      </div>  
-      <div className="container">  
-    {
-   (isEmpty(search) && playerList) ? playerList?.map(player=>{
-        return(
-        <Card {...player}/>
-        )
-      })
-      :
 
-   filtered &&  filtered?.map(player=>{
-    return(
-    <Card {...player}/>
-    )
-  })
-    } 
-    </div>
+        <input placeholder='Search for player or team...' type="text" value={search} onChange={(e) => setSearch(e?.target?.value)} />
+        <div className="icon">
+          <i className='search fa fa-search'></i>
+
+        </div>
+      </div>
+      <div className="container">
+        {
+          (isEmpty(search) && playerList) ? playerList?.map(player => {
+            return (
+              <Card {...player} />
+            )
+          })
+            :
+
+            filtered && filtered?.map(player => {
+              return (
+                <Card {...player} />
+              )
+            })
+        }
+      </div>
     </>
   );
 }
